@@ -1,7 +1,10 @@
 <template>
   <q-page class="flex flex-center">
     <div class="container">
-    <h1 class="title">Sistema de Gestión para Biblioteca</h1>
+    <h1 class="title">Bienvenido</h1>
+    <q-img 
+      src="../assets/books.jpg"
+    />
   </div>
   </q-page>
 </template>
@@ -16,15 +19,7 @@ export default defineComponent({
 
 
 <style>
-
-.container{
-  display: grid;
-  align-items: center;
- 
-}
-
 .title{
   font-size: 60px;
 }
-
 </style>

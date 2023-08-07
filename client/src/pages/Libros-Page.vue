@@ -1,25 +1,34 @@
 <template>
- <h1>Libros</h1>
-<table>
+<div class="q-pa-md">
+ <h3>Libros</h3>
+ <q-btn class="q-mb-md" color="info" v-on:click="nuevo" label="Agregar Libro" />
+ <q-markup-table>
     <thead>
         <tr>
             <th>Nombre del Libro</th>
             <th>Autor</th>
             <th>Precio</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
         <tr v-for="book in books" :key="book.id">         
            <th>{{ book.nombre }}</th>
            <th>{{ book.autor }}</th>
-           <th>{{ book.precio }}</th>
+           <th>${{ book.precio }}</th>
+           <th>
+            <q-btn class="q-mr-md" color="warning" icon="edit"/>
+            <q-btn color="negative" icon="delete"/>
+           </th>
         </tr>
     </tbody>
-</table>
+</q-markup-table>
+</div>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
+import axios from 'axios';
 
 export default defineComponent({
     name: 'Libros-Pages',
@@ -29,26 +38,21 @@ export default defineComponent({
         };
     },
 
+    methods:{
+        nuevo(){
+            this.$router.push('/agregarlibros')
+        }
+    },
+
     async mounted(){
-        const response = await fetch('http://localhost:3000/api/libros')
-        const datos = await response.json()
-        console.log(datos)
-        this.books = datos
-    }
+      const result = await axios.get('http://localhost:3000/api/libros')
+         this.books = result.data;
+     }
 })
 </script>
 
 <style>
-h1{
+h3{
     text-align: center;
-}
-
-table{
-    width: 100%;
-}
-
-th, td {
-   width: 25%;
-   text-align: center;
 }
 </style>
