@@ -1,21 +1,18 @@
 <template>
 <q-page class="q-pa-md">
 <h4 class="flex flex-center">Agregar Nuevo Libro</h4>
+<q-form>
 <q-input 
 filled
 v-model="nombre"
 label="Nombre del libro"
 class="q-mb-md"
-lazy-rules
-:rules="[ val => val && val.length > 0 || 'Este Campo es Obligatorio']"
 />
 <q-input
 filled
 v-model="autor"
 label="Autor del libro"
 class="q-mb-md"
-lazy-rules
-:rules="[ val => val && val.length > 0 || 'Este Campo es Obligatorio']"
 />
 <q-input
 filled
@@ -23,10 +20,9 @@ type="number"
 v-model="precio"
 label="Precio"
 class="q-mb-md"
-lazy-rules
-:rules="[ val => val && val.length > 0 || 'Este Campo es Obligatorio']"
 />
 <q-btn color="info" @click="storeBook" label="Guardar Libro"></q-btn>
+</q-form>
 </q-page>
 </template>
 
@@ -34,11 +30,16 @@ lazy-rules
 <script>
 import { defineComponent } from 'vue';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default defineComponent({
     name: 'Crear-Books',
     
     methods:{
+
+    alerta(){
+      Swal.fire('Libro Agregado Exitosamente')
+    },
     async storeBook(){
       const book = await axios.post(
         'http://localhost:3000/api/agregarlibros',
@@ -47,9 +48,12 @@ export default defineComponent({
             nombre: this.nombre,
             autor: this.autor,
             precio: this.precio
-        }
+        },
+
+        this.alerta()
       )
+      
     }
-    }
+  }
 })
 </script>

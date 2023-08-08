@@ -17,7 +17,7 @@
            <th>{{ book.autor }}</th>
            <th>${{ book.precio }}</th>
            <th>
-            <q-btn class="q-mr-md" color="warning" icon="edit"/>
+            <q-btn @click="editar(book.id)" class="q-mr-md" color="warning" icon="edit"/>
             <q-btn @click="deletebooks(book.id)" color="negative" icon="delete"/>
            </th>
         </tr>
@@ -29,8 +29,7 @@
 <script>
 import { defineComponent } from 'vue';
 import axios from 'axios';
-import VueSweetalert2 from 'vue-sweetalert2';
-import 'sweetalert2/dist/sweetalert2.min.css';
+import Swal from 'sweetalert2';
 
 export default defineComponent({
     name: 'Libros-Pages',
@@ -45,15 +44,31 @@ export default defineComponent({
             this.$router.push('/agregarlibros')
         },
 
+        editar(){
+            this.$router.push('/editarlibros')
+        },
+
        async deletebooks(id){
+          const borrar = Swal.fire({
+                title: '¿Estás seguro que quieres eliminar este libro?',   
+                confirmButtonText: 'Confirmar',
+                cancelButtonText: 'Cancelar',                  
+                showCancelButton: true,                          
+              });
+
+           if(borrar){
+
            const bookdelete = await axios.delete('http://localhost:3000/api/eliminarlibros/' + id)
-           this.$swal('Eliminado')
+            
+           }
+    
+           
         }
     },
 
     async mounted(){
       const result = await axios.get('http://localhost:3000/api/libros')
-         this.books = result.data;
+      this.books = result.data;
      }
 })
 </script>
