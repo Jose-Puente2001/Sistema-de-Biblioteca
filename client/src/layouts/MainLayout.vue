@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          Biblioteca
+          Sistema Biblioteca
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -50,12 +50,12 @@ import EssentialLink from 'components/EssentialLink.vue'
 const linksList = [
 {
     title: 'Principal',
-    caption: 'Pagina de Inicio',
+    icon: 'home',
     link: 'inicio'
   },
   {
     title: 'Libros',
-    caption: 'Pagina de libros',
+    icon: 'book',
     link: 'libros'
   },
 ]
