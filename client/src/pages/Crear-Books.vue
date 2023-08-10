@@ -1,7 +1,7 @@
 <template>
 <q-page class="q-pa-md">
 <h4 class="flex flex-center">Agregar Nuevo Libro</h4>
-<q-form>
+<q-form @submit="storeBook">
 <q-input 
 filled
 v-model="nombre"
@@ -21,7 +21,7 @@ v-model="precio"
 label="Precio"
 class="q-mb-md"
 />
-<q-btn color="info" @click="storeBook" label="Guardar Libro"></q-btn>
+<q-btn color="info" type="submit" label="Guardar Libro"></q-btn>
 </q-form>
 </q-page>
 </template>
@@ -38,7 +38,11 @@ export default defineComponent({
     methods:{
 
     alerta(){
-      Swal.fire('Libro Agregado Exitosamente')
+      Swal.fire(
+       'Libro Agregado Exitosamente',
+       'Registrado',
+       'success'
+      )
     },
     async storeBook(){
       const book = await axios.post(

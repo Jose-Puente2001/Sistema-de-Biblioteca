@@ -39,13 +39,17 @@ export default defineComponent({
         };
     },
 
+    mounted(){
+       this.getbooks()
+     },
+
     methods:{
         nuevo(){
             this.$router.push('/agregarlibros')
         },
 
-        editar(){
-            this.$router.push('/editarlibros')
+        editar(id){
+            this.$router.push('/editarlibros/' + id)
         },
 
         async getbooks(){
@@ -55,31 +59,26 @@ export default defineComponent({
         },
 
        async deletebooks(id){
+
           const borrar = await Swal.fire({
-                title: '¿Estás seguro que quieres eliminar este libro?',   
+                title: '¿Estás seguro que quieres eliminar este libro?',
+                text: 'No puedes revertir tu acción',
+                icon: 'warning',   
                 confirmButtonText: 'Confirmar',
                 cancelButtonText: 'Cancelar',                  
                 showCancelButton: true,                          
               });
 
            if(borrar.isConfirmed){
-
-            await axios.delete('http://localhost:3000/api/eliminarlibros/' + id)
             this.books = this.books.filter(book => book.id !== id)
+            await axios.delete('http://localhost:3000/api/eliminarlibros/' + id)
             
-            
-           
-                    
            }
     
          
         }
     },
-
-     mounted(){
-       this.getbooks()
-     }
-})
+});
 </script>
 
 <style>
