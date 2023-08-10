@@ -48,27 +48,36 @@ export default defineComponent({
             this.$router.push('/editarlibros')
         },
 
+        async getbooks(){
+            const result = await axios.get('http://localhost:3000/api/libros')
+            this.books = result.data;
+            
+        },
+
        async deletebooks(id){
-          const borrar = Swal.fire({
+          const borrar = await Swal.fire({
                 title: '¿Estás seguro que quieres eliminar este libro?',   
                 confirmButtonText: 'Confirmar',
                 cancelButtonText: 'Cancelar',                  
                 showCancelButton: true,                          
               });
 
-           if(borrar){
+           if(borrar.isConfirmed){
 
-           const bookdelete = await axios.delete('http://localhost:3000/api/eliminarlibros/' + id)
+            await axios.delete('http://localhost:3000/api/eliminarlibros/' + id)
+            this.books = this.books.filter(book => book.id !== id)
             
+            
+           
+                    
            }
     
-           
+         
         }
     },
 
-    async mounted(){
-      const result = await axios.get('http://localhost:3000/api/libros')
-      this.books = result.data;
+     mounted(){
+       this.getbooks()
      }
 })
 </script>
