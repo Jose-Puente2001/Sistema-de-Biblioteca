@@ -59,6 +59,7 @@ export default defineComponent({
       };
         
         this.alerta()
+        this.$router.push('/libros')
         await axios.put(`http://localhost:3000/api/actualizarlibros/${idLibro}`, datosActualizados)
        
       

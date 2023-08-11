@@ -54,7 +54,8 @@ export default defineComponent({
             precio: this.precio
         },
 
-        this.alerta()
+        this.alerta(),
+        this.$router.push('/libros')
       )
       
     }
